@@ -70,36 +70,38 @@ Se tudo estiver configurado corretamente, você verá seu novo aplicativo em exe
 
 ## Dependências
 
-| Tipo        | Dependência                                                                                                  | Versão      | Comando de instalação                                               |
-| ----------- | ------------------------------------------------------------------------------------------------------------ | ----------- | ------------------------------------------------------------------- |
-| Production  | [@mdi/js](https://www.npmjs.com/package/@mdi/js)                                                             | ^7.0.96     | ```npm i @mdi/js@^7.0.96```                                         |
-| Production  | [react](https://www.npmjs.com/package/react)                                                                 | 18.1.0      | ```npm i react@^18.1.0```                                           |
-| Production  | [react-native](https://www.npmjs.com/package/react-native)                                                   | 0.70.1      | ```npm i react-native@0.70.1```                                     |
-| Production  | [react-native-linear-gradient](https://www.npmjs.com/package/react-native-linear-gradient)                   | ^2.6.2      | ```npm i react-native-linear-gradient@^2.6.2```                     |
-| Production  | [react-native-paper](https://www.npmjs.com/package/react-native-paper)                                       | ^5.0.0-rc.6 | ```npm i react-native-paper@^5.0.0-rc.6```                          |
-| Production  | [react-native-svg](https://www.npmjs.com/package/react-native-svg)                                           | ^13.2.0     | ```npm i react-native-svg@^13.2.0```                                |
-| Production  | [typescript](https://www.npmjs.com/package/typescript)                                                       | ^4.8.4      | ```npm i typescript@^4.8.4```                                       |
-|             |                                                                                                              |             |                                                                     |
-| Development | [@babel/core](https://www.npmjs.com/package/@babel/core)                                                     | ^7.12.9     | ```npm i @babel/core@^7.12.9 --save-dev```                          |
-| Development | [@babel/runtime](https://www.npmjs.com/package/@babel/runtime)                                               | ^7.12.5     | ```npm i @babel/runtime@^7.12.5 --save-dev```                       |
-| Development | [@react-native-community/eslint-config](https://www.npmjs.com/package/@react-native-community/eslint-config) | ^2.0.0      | ```npm i @react-native-community/eslint-config@^2.0.0 --save-dev``` |
-| Development | [babel-jest](https://www.npmjs.com/package/babel-jest)                                                       | ^26.6.3     | ```npm i babel-jest@^26.6.3 --save-dev```                           |
-| Development | [babel-plugin-module-resolver](https://www.npmjs.com/package/babel-plugin-module-resolver)                   | ^4.1.0      | ```npm i babel-plugin-module-resolver@^4.1.0 --save-dev```          |
-| Development | [eslint](https://www.npmjs.com/package/eslint)                                                               | ^7.32.0     | ```npm i eslint@^7.32.0 --save-dev```                               |
-| Development | [jest](https://www.npmjs.com/package/jest)                                                                   | ^26.6.3     | ```npm i jest@^26.6.3 --save-dev```                                 |
-| Development | [metro-react-native-babel-preset](https://www.npmjs.com/package/metro-react-native-babel-preset)             | ^0.72.1     | ```npm i metro-react-native-babel-preset@^0.72.1 --save-dev```      |
-| Development | [postcss](https://www.npmjs.com/package/postcss)                                                             | ^8.4.16     | ```npm i postcss@^8.4.16 --save-dev```                              |
-| Development | [postcss-css-variables](https://www.npmjs.com/package/postcss-css-variables)                                 | ^0.18.0     | ```npm i postcss-css-variables@^0.18.0 --save-dev```                |
-| Development | [react-native-postcss-transformer](https://www.npmjs.com/package/react-native-postcss-transformer)           | ^1.2.4      | ```npm i react-native-postcss-transformer@^1.2.4 --save-dev```      |
-| Development | [react-native-sass-transformer](https://www.npmjs.com/package/react-native-sass-transformer)                 | ^2.0.0      | ```npm i react-native-sass-transformer@^2.0.0 --save-dev```         |
-| Development | [react-test-renderer](https://www.npmjs.com/package/react-test-renderer)                                     | 18.1.0      | ```npm i react-test-renderer@18.1.0 --save-dev```                   |
-| Development | [sass](https://www.npmjs.com/package/sass)                                                                   | ^1.55.0     | ```npm i sass@^1.55.0 --save-dev```                                 |
+| Tipo        | Dependência                                            | Versão      | Comando de instalação                                               |
+| ----------- | ------------------------------------------------------ | ----------- | ------------------------------------------------------------------- |
+| Production  | [@mdi/js][Production_1]                                | ^7.0.96     | ```npm i @mdi/js@^7.0.96```                                         |
+| Production  | [react][Production_2]                                  | 18.1.0      | ```npm i react@^18.1.0```                                           |
+| Production  | [react-native][Production_3]                           | 0.70.1      | ```npm i react-native@0.70.1```                                     |
+| Production  | [react-native-linear-gradient][Production_4]           | ^2.6.2      | ```npm i react-native-linear-gradient@^2.6.2```                     |
+| Production  | [react-native-paper][Production_5]                     | ^5.0.0-rc.6 | ```npm i react-native-paper@^5.0.0-rc.6```                          |
+| Production  | [react-native-svg][Production_6]                       | ^13.2.0     | ```npm i react-native-svg@^13.2.0```                                |
+| Production  | [typescript][Production_7]                             | ^4.8.4      | ```npm i typescript@^4.8.4```                                       |
+|             |                                                        |             |                                                                     |
+| Development | [@babel/core][Development_1]                           | ^7.12.9     | ```npm i @babel/core@^7.12.9 --save-dev```                          |
+| Development | [@babel/runtime][Development_2]                        | ^7.12.5     | ```npm i @babel/runtime@^7.12.5 --save-dev```                       |
+| Development | [@react-native-community/eslint-config][Development_3] | ^2.0.0      | ```npm i @react-native-community/eslint-config@^2.0.0 --save-dev``` |
+| Development | [babel-jest][Development_4]                            | ^26.6.3     | ```npm i babel-jest@^26.6.3 --save-dev```                           |
+| Development | [babel-plugin-module-resolver][Development_5]          | ^4.1.0      | ```npm i babel-plugin-module-resolver@^4.1.0 --save-dev```          |
+| Development | [eslint][Development_6]                                | ^7.32.0     | ```npm i eslint@^7.32.0 --save-dev```                               |
+| Development | [jest][Development_7]                                  | ^26.6.3     | ```npm i jest@^26.6.3 --save-dev```                                 |
+| Development | [metro-react-native-babel-preset][Development_8]       | ^0.72.1     | ```npm i metro-react-native-babel-preset@^0.72.1 --save-dev```      |
+| Development | [postcss][Development_9]                               | ^8.4.16     | ```npm i postcss@^8.4.16 --save-dev```                              |
+| Development | [postcss-css-variables][Development_10]                | ^0.18.0     | ```npm i postcss-css-variables@^0.18.0 --save-dev```                |
+| Development | [react-native-postcss-transformer][Development_11]     | ^1.2.4      | ```npm i react-native-postcss-transformer@^1.2.4 --save-dev```      |
+| Development | [react-native-sass-transformer][Development_12]        | ^2.0.0      | ```npm i react-native-sass-transformer@^2.0.0 --save-dev```         |
+| Development | [react-test-renderer][Development_13]                  | 18.1.0      | ```npm i react-test-renderer@18.1.0 --save-dev```                   |
+| Development | [sass][Development_14]                                 | ^1.55.0     | ```npm i sass@^1.55.0 --save-dev```                                 |
+| Development  | [@tsconfig/react-native][Development_15]                 | ^2.0.2      | ```npm i @tsconfig/react-native@^2.0.2 --save-dev```                           |
+| Development  | [babel-plugin-module-resolver][Development_16]                 | ^4.1.0      | ```npm i babel-plugin-module-resolver@^4.1.0 --save-dev```                           |
 
 > As seguintes dependências exigem configuração especial para um funcionamento adequado:
-> - [sass](https://www.npmjs.com/package/sass)
-> - [react-native-sass-transformer](https://www.npmjs.com/package/react-native-sass-transformer)
-> - [postcss](https://www.npmjs.com/package/postcss)
-> - [postcss-css-variables](https://www.npmjs.com/package/postcss-css-variables)
+> - [sass][Development_14]
+> - [react-native-sass-transformer][Development_12]
+> - [postcss][Development_9]
+> - [postcss-css-variables][Development_10]
 
 > Para adiantar o serviço, faça o download dos seguintes arquivos na raiz do projeto:
 > [./transformer.js](./transformer.js)
@@ -124,17 +126,82 @@ Se tudo estiver configurado corretamente, você verá seu novo aplicativo em exe
 >})();
 > ```
 
-> Para um bom aproveito desse projeto, será necessário o uso do arquivo [tsconfig.json](./tsconfig.json) ou [jsconfig.json](./jsconfig.json)
+> Para um bom aproveito desse projeto, será necessário o uso do arquivo [tsconfig.json](./tsconfig.json) e poucas configurações no arquivo [babel.config.js](./babel.config.js). Mas, antes disso,certifique-se que tenha instalado as dependências [typescript][Production_7], [@tsconfig/react-native][Development_15] e [babel-plugin-module-resolver][Development_16].
 > 
-> Se em seu projeto já houver um desses arquivos, certifique-se  se possui chaves e valores semelhante ao exemplo:
+> Se em seu projeto já houver o arquivo `tsconfig.json`, certifique-se se possui chaves e valores semelhante ao exemplo:
 > ```json
 > {
->   "compilerOptions": {
->     "baseUrl": ".",
->     "paths": {
->       "*": ["src/*", "solutions/*"]
->     }
->   },
->   "include": ["src", "solutions"]
+>  "extends": "@tsconfig/react-native/tsconfig.json",
+>  "$schema": "https://json.schemastore.org/tsconfig",
+>  "compilerOptions": {
+>    "target": "esnext",
+>    "module": "commonjs",
+>    "types": ["jest"],
+>    "lib": ["es2019"],
+>    "allowJs": true,
+>    "jsx": "react-native",
+>    "noEmit": true,
+>    "isolatedModules": true,
+>    "strict": true,
+>    "moduleResolution": "node",
+>    "resolveJsonModule": true,
+>    "allowSyntheticDefaultImports": true,
+>    "forceConsistentCasingInFileNames": true,
+>    "esModuleInterop": true,
+>    "skipLibCheck": false,
+>    "noFallthroughCasesInSwitch": true,
+>    "noImplicitAny": true,
+>    "removeComments": true,
+>    "preserveConstEnums": true,
+>    "sourceMap": false,
+>    "baseUrl": "./",
+>    "paths": {
+>      "*": ["solutions/*", "src/*"]
+>    }
+>  },
+>  "include": ["solutions/**/*", "src/**/*"],
+>  "exclude": []
 > }
 > ```
+> 
+> Já no arquivo `babel.config.js`, certifique-se se possui chaves e valores semelhante ao exemplo:
+> ```json
+> ...
+>   plugins: [
+>       ...
+>       ['module-resolver', {
+>           root: [
+>               "./src", "./solutions"
+>           ],
+>           ...
+>       }],
+>       ...
+>   ],
+> ...
+> ```
+
+
+[Production_1]:https://www.npmjs.com/package/@mdi/js
+[Production_2]:https://www.npmjs.com/package/react
+[Production_3]:https://www.npmjs.com/package/react-native
+[Production_4]:https://www.npmjs.com/package/react-native-linear-gradient
+[Production_5]:https://www.npmjs.com/package/react-native-paper
+[Production_6]:https://www.npmjs.com/package/react-native-svg
+[Production_7]:https://www.npmjs.com/package/typescript
+
+[Development_1]:https://www.npmjs.com/package/@babel/core
+[Development_2]:https://www.npmjs.com/package/@babel/runtime
+[Development_3]:https://www.npmjs.com/package/@react-native-community/eslint-config
+[Development_4]:https://www.npmjs.com/package/babel-jest
+[Development_5]:https://www.npmjs.com/package/babel-plugin-module-resolver
+[Development_6]:https://www.npmjs.com/package/eslint
+[Development_7]:https://www.npmjs.com/package/jest
+[Development_8]:https://www.npmjs.com/package/metro-react-native-babel-preset
+[Development_9]:https://www.npmjs.com/package/postcss
+[Development_10]:https://www.npmjs.com/package/postcss-css-variables
+[Development_11]:https://www.npmjs.com/package/react-native-postcss-transformer
+[Development_12]:https://www.npmjs.com/package/react-native-sass-transformer
+[Development_13]:https://www.npmjs.com/package/react-test-renderer
+[Development_14]:https://www.npmjs.com/package/sass
+[Development_15]:https://www.npmjs.com/package/@tsconfig/react-native
+[Development_16]:https://www.npmjs.com/package/babel-plugin-module-resolver

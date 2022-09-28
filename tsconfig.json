@@ -1,9 +1,32 @@
 {
+  "extends": "@tsconfig/react-native/tsconfig.json",
+  "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
-    "baseUrl": ".",
+    "target": "esnext",
+    "module": "commonjs",
+    "types": ["jest"],
+    "lib": ["es2019"],
+    "allowJs": true,
+    "jsx": "react-native",
+    "noEmit": true,
+    "isolatedModules": true,
+    "strict": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "skipLibCheck": false,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": false,
+    "baseUrl": "./",
     "paths": {
-      "*": ["src/*", "solutions/*"]
+      "*": ["solutions/*", "src/*"]
     }
   },
-  "include": ["src", "solutions"]
+  "include": ["solutions/**/*", "src/**/*"],
+  "exclude": []
 }
