@@ -129,7 +129,7 @@ Se tudo estiver configurado corretamente, você verá seu novo aplicativo em exe
 > Para um bom aproveito desse projeto, será necessário o uso do arquivo [tsconfig.json](./tsconfig.json) e poucas configurações no arquivo [babel.config.js](./babel.config.js). Mas, antes disso,certifique-se que tenha instalado as dependências [typescript][Production_7], [@tsconfig/react-native][Development_15] e [babel-plugin-module-resolver][Development_16].
 > 
 > Se em seu projeto já houver o arquivo `tsconfig.json`, certifique-se se possui chaves e valores semelhante ao exemplo:
-> ```json
+> ```js
 > {
 >  "extends": "@tsconfig/react-native/tsconfig.json",
 >  "$schema": "https://json.schemastore.org/tsconfig",
@@ -165,7 +165,7 @@ Se tudo estiver configurado corretamente, você verá seu novo aplicativo em exe
 > ```
 > 
 > Já no arquivo `babel.config.js`, certifique-se se possui chaves e valores semelhante ao exemplo:
-> ```json
+> ```js
 > {
 > //...
 >   plugins: [
