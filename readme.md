@@ -77,7 +77,8 @@ Se tudo estiver configurado corretamente, você verá seu novo aplicativo em exe
 | Production  | [react-native](https://www.npmjs.com/package/react-native)                                                   | 0.70.1      | ```npm i react-native@0.70.1```                                     |
 | Production  | [react-native-linear-gradient](https://www.npmjs.com/package/react-native-linear-gradient)                   | ^2.6.2      | ```npm i react-native-linear-gradient@^2.6.2```                     |
 | Production  | [react-native-paper](https://www.npmjs.com/package/react-native-paper)                                       | ^5.0.0-rc.6 | ```npm i react-native-paper@^5.0.0-rc.6```                          |
-| Production  | [react-native-svg](https://www.npmjs.com/package/react-native-svg)                                           | ^13.2.0"    | ```npm i react-native-svg@^13.2.0```                                |
+| Production  | [react-native-svg](https://www.npmjs.com/package/react-native-svg)                                           | ^13.2.0     | ```npm i react-native-svg@^13.2.0```                                |
+| Production  | [typescript](https://www.npmjs.com/package/typescript)                                                       | ^4.8.4      | ```npm i typescript@^4.8.4```                                       |
 |             |                                                                                                              |             |                                                                     |
 | Development | [@babel/core](https://www.npmjs.com/package/@babel/core)                                                     | ^7.12.9     | ```npm i @babel/core@^7.12.9 --save-dev```                          |
 | Development | [@babel/runtime](https://www.npmjs.com/package/@babel/runtime)                                               | ^7.12.5     | ```npm i @babel/runtime@^7.12.5 --save-dev```                       |
@@ -121,4 +122,19 @@ Se tudo estiver configurado corretamente, você verá seu novo aplicativo em exe
 >    }
 >  };
 >})();
+> ```
+
+> Para um bom aproveito desse projeto, será necessário o uso do arquivo [tsconfig.json](./tsconfig.json) ou [jsconfig.json](./jsconfig.json)
+> 
+> Se em seu projeto já houver um desses arquivos, certifique-se  se possui chaves e valores semelhante ao exemplo:
+> ```json
+> {
+>   "compilerOptions": {
+>     "baseUrl": ".",
+>     "paths": {
+>       "*": ["src/*", "solutions/*"]
+>     }
+>   },
+>   "include": ["src", "solutions"]
+> }
 > ```
