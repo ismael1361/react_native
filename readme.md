@@ -8,6 +8,8 @@ Esse projeto tem como objetivo, oferecer alternativas e soluções para o âmbit
 
 Cada projeto será separado por pastar de acordo com o que represente para fácil identificação. Além disso, conterá uma documentação markdown própria, demonstrando como realizar a instalação (de acordo com as dependências) e seu uso, demonstrando linhas de comando e exemplos.
 
+> Atenção: É importante que leia pelo menos a parte [Importante](#importante) dessa documentação para evitar erros e conflitos
+
 Espero de coração que possa encontrar a solução para o seu problema nesse repositório 🤩😌
 
 ## Criando novo projeto React Native
@@ -97,90 +99,94 @@ Se tudo estiver configurado corretamente, você verá seu novo aplicativo em exe
 | Development  | [@tsconfig/react-native][Development_15]                 | ^2.0.2      | ```npm i @tsconfig/react-native@^2.0.2 --save-dev```                           |
 | Development  | [babel-plugin-module-resolver][Development_16]                 | ^4.1.0      | ```npm i babel-plugin-module-resolver@^4.1.0 --save-dev```                           |
 
-> As seguintes dependências exigem configuração especial para um funcionamento adequado:
-> - [sass][Development_14]
-> - [react-native-sass-transformer][Development_12]
-> - [postcss][Development_9]
-> - [postcss-css-variables][Development_10]
+## Importante
 
-> Para adiantar o serviço, faça o download dos seguintes arquivos na raiz do projeto:
-> [./transformer.js](./transformer.js)
-> [./postcss.config.js](./transformer.js)
->
-> Em Em seguida, no arquivo ```./metro.config.js``` na raiz do seu projeto, adicione o seguinte trecho de código:
-> ```js
-> const { getDefaultConfig } = require("metro-config");
-> 
-> module.exports = (async () => {
->  const {
->    resolver: { sourceExts }
->  } = await getDefaultConfig();
->  return {
->    transformer: {
->      babelTransformerPath: require.resolve("./transformer.js")
->    },
->    resolver: {
->      sourceExts: [...sourceExts, "scss", "sass"]
->    }
->  };
->})();
-> ```
+As seguintes dependências exigem configuração especial para um funcionamento adequado:
 
-> Para um bom aproveito desse projeto, será necessário o uso do arquivo [tsconfig.json](./tsconfig.json) e poucas configurações no arquivo [babel.config.js](./babel.config.js). Mas, antes disso,certifique-se que tenha instalado as dependências [typescript][Production_7], [@tsconfig/react-native][Development_15] e [babel-plugin-module-resolver][Development_16].
-> 
-> Se em seu projeto já houver o arquivo `tsconfig.json`, certifique-se se possui chaves e valores semelhante ao exemplo:
-> ```js
-> {
->  "extends": "@tsconfig/react-native/tsconfig.json",
->  "$schema": "https://json.schemastore.org/tsconfig",
->  "compilerOptions": {
->    "target": "esnext",
->    "module": "commonjs",
->    "types": ["jest"],
->    "lib": ["es2019"],
->    "allowJs": true,
->    "jsx": "react-native",
->    "noEmit": true,
->    "isolatedModules": true,
->    "strict": true,
->    "moduleResolution": "node",
->    "resolveJsonModule": true,
->    "allowSyntheticDefaultImports": true,
->    "forceConsistentCasingInFileNames": true,
->    "esModuleInterop": true,
->    "skipLibCheck": false,
->    "noFallthroughCasesInSwitch": true,
->    "noImplicitAny": true,
->    "removeComments": true,
->    "preserveConstEnums": true,
->    "sourceMap": false,
->    "baseUrl": "./",
->    "paths": {
->      "*": ["solutions/*", "src/*"]
->    }
->  },
->  "include": ["solutions/**/*", "src/**/*"],
->  "exclude": []
-> }
-> ```
-> 
-> Já no arquivo `babel.config.js`, certifique-se se possui chaves e valores semelhante ao exemplo:
-> ```js
-> {
-> //...
->   plugins: [
->       //...
->       ['module-resolver', {
->           root: [
->               "./src", "./solutions"
->           ],
->           //...
->       }],
->       //...
->   ],
-> //...
-> }
-> ```
+- [sass][Development_14]
+- [react-native-sass-transformer][Development_12]
+- [postcss][Development_9]
+- [postcss-css-variables][Development_10]
+
+Para adiantar o processo, faça o download dos seguintes arquivos na raiz do projeto:
+- [./transformer.js](./transformer.js)
+- [./postcss.config.js](./transformer.js)
+
+Em Em seguida, no arquivo ```./metro.config.js``` na raiz do seu projeto, adicione o seguinte trecho de código:
+
+```js
+const { getDefaultConfig } = require("metro-config");
+
+module.exports = (async () => {
+    const {
+        resolver: { sourceExts }
+    } = await getDefaultConfig();
+    return {
+        transformer: {
+            babelTransformerPath: require.resolve("./transformer.js")
+        },
+        resolver: {
+            sourceExts: [...sourceExts, "scss", "sass"]
+        }
+    };
+})();
+```
+
+Para um bom aproveito desse projeto, será necessário o uso do arquivo [tsconfig.json](./tsconfig.json) e poucas configurações no arquivo [babel.config.js](./babel.config.js). Mas, antes disso,certifique-se que tenha instalado as dependências [typescript][Production_7], [@tsconfig/react-native][Development_15] e [babel-plugin-module-resolver][Development_16].
+
+Se em seu projeto já houver o arquivo [`tsconfig.json`](./tsconfig.json), certifique-se se possui chaves e valores semelhante ao exemplo:
+```js
+{
+    "extends": "@tsconfig/react-native/tsconfig.json",
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "commonjs",
+        "types": ["jest"],
+        "lib": ["es2019"],
+        "allowJs": true,
+        "jsx": "react-native",
+        "noEmit": true,
+        "isolatedModules": true,
+        "strict": true,
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "allowSyntheticDefaultImports": true,
+        "forceConsistentCasingInFileNames": true,
+        "esModuleInterop": true,
+        "skipLibCheck": false,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitAny": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "sourceMap": false,
+        "baseUrl": "./",
+        "paths": {
+            "*": ["solutions/*", "src/*"]
+        }
+    },
+    "include": ["solutions/**/*", "src/**/*"],
+    "exclude": []
+}
+```
+
+Já no arquivo [`babel.config.js`](babel.config.js), certifique-se se possui chaves e valores semelhante ao exemplo:
+```js
+module.exports = {
+//...
+  plugins: [
+      //...
+      ['module-resolver', {
+          root: [
+              "./src", "./solutions"
+          ],
+          //...
+      }],
+      //...
+  ],
+//...
+}
+```
 
 
 [Production_1]:https://www.npmjs.com/package/@mdi/js
