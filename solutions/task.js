@@ -92,6 +92,20 @@ const install = async (...packages)=>{
         }
     });
 
+    const printLog = Array.isArray(packages[0]) && typeof packages[1] === "boolean" ? packages[1] : true;
+
+    packages = Array.isArray(packages[0]) ? packages[0] : packages;
+
+    let dependenciesRoot = {
+        dependencies: {},
+        devDependencies: {}
+    };
+
+    const assignDependencies = ({dependencies, devDependencies})=>{
+        dependenciesRoot["dependencies"] = Object.assign(dependenciesRoot["dependencies"], dependencies);
+        dependenciesRoot["devDependencies"] = Object.assign(dependenciesRoot["devDependencies"], devDependencies);
+    }
+
     for(let i=0; i<packages.length; i++){
         const package = packages[i];
         const url = `https://api.github.com/repos/ismael1361/react_native/contents/solutions/${package}`;
@@ -101,27 +115,62 @@ const install = async (...packages)=>{
         });
 
         try{
-            const files = JSON.parse(response).map(({name, path, download_url, type})=>({name, path: path.replace(/^solutions\//gi, ""), url: download_url, type}));
+            const files = JSON.parse(response).map(({name, path, download_url, type})=>({name, path: path.replace(/^solutions\//gi, ""), url: download_url, type})).filter(file => file.type === "file");
 
-            let errorDowloadFile = 0;
+            let errorDowloadFile = 0, dependencies = {};
 
             for(let f=0; f<files.length; f++){
-                await download(files[f]).catch(()=>{
-                    //console.error(`Error trying to download ${files[f].path}`);
+                const file = files[f];
+                if(file.name === "dependencies"){
+                    const content = await request(file.url, conf).catch(()=>{});
+                    dependencies = content && typeof content === "string" ? JSON.parse(content) : {};
+                    continue;
+                }
+
+                await download(file).catch(()=>{
+                    //console.error(`Error trying to download ${file.path}`);
                     errorDowloadFile += 1;
                 });
             }
 
+            if(Array.isArray(dependencies["internal"]) && dependencies["internal"].length > 0){
+                const d = await install(dependencies["internal"], false).catch(()=>{});
+                assignDependencies(d);
+            }
+
             if(errorDowloadFile > 0){
                 rmSync(path.join(root, package), { recursive: true, force: true });
-                console.error(`Error when trying to download the ${package} package`);
+                printLog && console.error(`Error when trying to download the ${package} package`);
             }else{
-                console.log(`The ${package} package was successfully installed`);
+                printLog && console.log(`The ${package} package was successfully installed`);
+
+                if(dependencies["npm"]){
+                    assignDependencies(dependencies["npm"]);
+                }
             }
         }catch(e){}
     }
 
+    let dependenciesList = Object.entries(dependenciesRoot["dependencies"] || {});
+    let devDependenciesList = Object.entries(dependenciesRoot["devDependencies"] || {});
+
+    if(dependenciesList.length > 0 || devDependenciesList.length > 0){
+        printLog && console.log("\n\n* Installed packages require installation of dependencies, run the following commands to install:");
+
+        if(dependenciesList.length > 0){
+            printLog && console.log(`       npm i ${dependenciesList.map(d=> d.join("@")).join(" ")}`);
+        }
+
+        if(devDependenciesList.length > 0){
+            printLog && console.log(`       npm i ${devDependenciesList.map(d=> d.join("@")).join(" ")} --save-dev`);
+        }
+
+        printLog && console.log("\n");
+    }
+
     updateExporteds();
+
+    return dependenciesRoot;
 }
 
 (async()=>{
