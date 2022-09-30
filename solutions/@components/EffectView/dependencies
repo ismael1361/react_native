@@ -1,0 +1,10 @@
+{
+    "internal": ["@utils/cssGradientParser", "@utils/cssParser"],
+    "npm": {
+        "dependencies": {
+            "@react-native-community/blur": "^4.2.0",
+            "react-native-linear-gradient": "^2.6.2"
+        },
+        "devDependencies": {}
+    }
+}

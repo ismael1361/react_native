@@ -1,0 +1,10 @@
+{
+    "internal": [],
+    "npm": {
+        "dependencies": {
+            "@mdi/js": "^7.0.96",
+            "react-native-svg": "^13.2.0"
+        },
+        "devDependencies": {}
+    }
+}
