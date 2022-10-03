@@ -93,7 +93,18 @@ Se tudo estiver configurado corretamente, você verá seu novo aplicativo em exe
 
 Vale ressaltar, para uma ótima experiência e sem problemas do uso desse projeto, seguir as recomendações sobre instalação das dependências e configurações. 
 
-Além disso, é recomendável, reservar uma pasta específica para o uso desse projeto no âmbito do desenvolvimento, como nesse caso, foi dado o nome a essa pasta de [solutions](./solutions). Dessa forma, nos demais diretórios inclusos nessa pasta, deve-se respeitar e seguir igualmente o diretório de cada solução.
+Além disso, é recomendável reservar uma pasta específica na raiz do projeto para o uso desse projeto no âmbito do desenvolvimento, como nesse caso, foi dado o nome a essa pasta de [solutions](./solutions). Dessa forma, nos demais diretórios inclusos nessa pasta, deve-se respeitar e seguir igualmente o diretório de cada solução. Para facilitar, foi criando um task solution de comando que realiza o tramite de instalação de cada solução. Basta apenas fazer o download do arquivo [task.js](./solutions/task.js) e salva-lo na pasta [solutions](./solutions) e executar comando de instalação, tipo:
+
+```properties
+node ./solutions/task install {{@package/solution}}
+```
+
+Opções válidas:
+
+| Opção                     | Descrição                                                                                             |
+| ------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `install` ou `-i`         | Responsável em instalar os pacotes de solução, pode realizar mais de uma instalação instantaneamente. |
+| `update-exports` ou `-ue` | Formaliza  as indexes de exportações de cada pacote.                                                  |
 
 As seguintes dependências exigem configuração especial para um funcionamento adequado:
 

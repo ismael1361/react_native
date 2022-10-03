@@ -5,6 +5,12 @@
             "@react-native-community/blur": "^4.2.0",
             "react-native-linear-gradient": "^2.6.2"
         },
-        "devDependencies": {}
+        "devDependencies": {
+            "sass": "^1.55.0",
+            "react-native-sass-transformer": "^2.0.0",
+            "postcss": "^8.4.16",
+            "postcss-css-variables": "^0.18.0",
+            "react-native-postcss-transformer": "^1.2.4"
+        }
     }
 }

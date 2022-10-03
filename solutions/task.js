@@ -1,8 +1,48 @@
-const { readdirSync, rmSync, mkdirSync, writeFileSync, lstatSync } = require('fs');
+const { readdirSync, rmSync, mkdirSync, writeFileSync, lstatSync, existsSync } = require('fs');
 const path = require('path');
 const _url = require('url');
 const https = require('https');
 const http = require('https');
+const { exec } = require('child_process');
+
+const getAppPath = ()=> new Promise(async (resolve, reject)=>{
+    try{
+        const { dirname } = path;
+        for(let path of module.paths){
+            if(existsSync(path)){
+                return resolve(dirname(path));
+            }
+        }
+        resolve(null);
+    }catch(e){
+        resolve(null);
+    }
+});
+
+const mergeJson = (...targets)=>{
+    let result = {};
+    for(let target of targets){
+        if(typeof target !== "object"){continue;}
+        for(const [key, value] of Object.entries(target)){
+            result[key] = Array.isArray(value) ? value : typeof value === "object" ? mergeJson(result[key], value) : value;
+        }
+    }
+    return result;
+}
+
+const npmls = ()=> new Promise(async (resolve, reject)=>{
+    try{
+        const pathApp = await getAppPath();
+        if(typeof pathApp !== "string" || !existsSync(path)){
+            resolve({});
+        }
+        exec('npm ls --json', {cwd: pathApp}, (error, stdout, stderr) => {
+            resolve(JSON.parse(stdout || "{dependencies: {}}")["dependencies"] || {});
+        });
+    }catch({message}){
+        resolve({});
+    }
+});
 
 const request = (url, config)=> new Promise((resolve, reject)=>{
     try{
@@ -69,7 +109,7 @@ const updateExporteds = ()=>{
         importList.forEach((imported)=>{
             const name = imported.replace(/\.([\S\W\w]+)$/gi, "");
             if(name === "index"){return;}
-            code += `import ${name} from "${path.join(directory, imported).replace(/\\+/gi, "/")}"\n`;
+            code += `import ${name} from "./${imported}"\n`;
             importeds.push(name);
         });
 
@@ -80,16 +120,44 @@ const updateExporteds = ()=>{
 }
 
 const install = async (...packages)=>{
-    const conf = {headers: {"User-Agent": 'ismael1361'}};
+    const conf = {headers: {"User-Agent": 'ismael1361', "authorization": "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"}};
 
-    const download = async ({name, path: _path, url, type})=> new Promise(async (resolve, reject)=>{
+    const download = async (url)=> new Promise(async (resolve, reject)=>{
+        let errorDowloadFile = 0, dependencies = {};
+
         try{
             const response = await request(url, conf);
-            writeFile(path.join(root, _path), response);
-            resolve();
+
+            const elements = JSON.parse(response).map(({name, path, url, download_url, type})=>({name, path: path.replace(/^solutions\//gi, ""), url: (type === "file" ? download_url : url), type}));
+
+            for(let f=0; f<elements.length; f++){
+                const element = elements[f];
+                if(element.name === "dependencies" && element.type === "file"){
+                    const content = await request(element.url, conf).catch(()=>{});
+                    dependencies = mergeJson(dependencies, content && typeof content === "string" ? JSON.parse(content) : {});
+                    continue;
+                }
+
+                const {name, path: _path, url: _url, type} = element;
+
+                if(type === "file"){
+                    try{
+                        const response = await request(_url, conf);
+                        writeFile(path.join(root, _path), response);
+                    }catch(e){
+                        errorDowloadFile += 1;
+                    }
+                }else if(type === "dir"){
+                    let result = await download(_url);
+                    dependencies = mergeJson(dependencies, result.dependencies);
+                    errorDowloadFile += result.erros;
+                }
+            }
         }catch(e){
-            reject();
+            errorDowloadFile = errorDowloadFile <= 0 ? 1 : errorDowloadFile;
         }
+
+        resolve({dependencies, erros: errorDowloadFile});
     });
 
     const printLog = Array.isArray(packages[0]) && typeof packages[1] === "boolean" ? packages[1] : true;
@@ -101,41 +169,22 @@ const install = async (...packages)=>{
         devDependencies: {}
     };
 
-    const assignDependencies = ({dependencies, devDependencies})=>{
-        dependenciesRoot["dependencies"] = Object.assign(dependenciesRoot["dependencies"], dependencies);
-        dependenciesRoot["devDependencies"] = Object.assign(dependenciesRoot["devDependencies"], devDependencies);
-    }
-
     for(let i=0; i<packages.length; i++){
         const package = packages[i];
         const url = `https://api.github.com/repos/ismael1361/react_native/contents/solutions/${package}`;
 
         const response = await request(url, conf).catch(()=>{
-            console.error(`The declared ${package} package does not exist or an error occurred while acquiring the data!`);
+            console.error(`The declared ${package} package does not exist or an error occurred while acquiring the data!\nurl: ${url}\n`);
         });
 
+        if(!response){ continue; }
+
         try{
-            const files = JSON.parse(response).map(({name, path, download_url, type})=>({name, path: path.replace(/^solutions\//gi, ""), url: download_url, type})).filter(file => file.type === "file");
-
-            let errorDowloadFile = 0, dependencies = {};
-
-            for(let f=0; f<files.length; f++){
-                const file = files[f];
-                if(file.name === "dependencies"){
-                    const content = await request(file.url, conf).catch(()=>{});
-                    dependencies = content && typeof content === "string" ? JSON.parse(content) : {};
-                    continue;
-                }
-
-                await download(file).catch(()=>{
-                    //console.error(`Error trying to download ${file.path}`);
-                    errorDowloadFile += 1;
-                });
-            }
+            let {dependencies, erros: errorDowloadFile} = await download(url);
 
             if(Array.isArray(dependencies["internal"]) && dependencies["internal"].length > 0){
                 const d = await install(dependencies["internal"], false).catch(()=>{});
-                assignDependencies(d);
+                dependenciesRoot = mergeJson(dependenciesRoot, d);
             }
 
             if(errorDowloadFile > 0){
@@ -145,7 +194,7 @@ const install = async (...packages)=>{
                 printLog && console.log(`The ${package} package was successfully installed`);
 
                 if(dependencies["npm"]){
-                    assignDependencies(dependencies["npm"]);
+                    dependenciesRoot = mergeJson(dependenciesRoot, dependencies["npm"]);
                 }
             }
         }catch(e){}
@@ -154,15 +203,20 @@ const install = async (...packages)=>{
     let dependenciesList = Object.entries(dependenciesRoot["dependencies"] || {});
     let devDependenciesList = Object.entries(dependenciesRoot["devDependencies"] || {});
 
+    const dependencies_installed = await npmls();
+
+    dependenciesList = dependenciesList.filter(([dep])=> !dependencies_installed[dep]);
+    devDependenciesList = devDependenciesList.filter(([dep])=> !dependencies_installed[dep]);
+
     if(dependenciesList.length > 0 || devDependenciesList.length > 0){
-        printLog && console.log("\n\n* Installed packages require installation of dependencies, run the following commands to install:");
+        printLog && console.log("\n\n* Installed packages require installation of dependencies, run the following commands to install:\n");
 
         if(dependenciesList.length > 0){
-            printLog && console.log(`       npm i ${dependenciesList.map(d=> d.join("@")).join(" ")}`);
+            printLog && console.log(`    npm i ${dependenciesList.map(d=> d.join("@")).join(" ")}`);
         }
 
         if(devDependenciesList.length > 0){
-            printLog && console.log(`       npm i ${devDependenciesList.map(d=> d.join("@")).join(" ")} --save-dev`);
+            printLog && console.log(`    npm i ${devDependenciesList.map(d=> d.join("@")).join(" ")} --save-dev`);
         }
 
         printLog && console.log("\n");
@@ -173,7 +227,7 @@ const install = async (...packages)=>{
     return dependenciesRoot;
 }
 
-(async()=>{
+(async ()=>{
     try{
         while(argumentos.length > 0){
             arg = getNextArgv();
